@@ -232,17 +232,22 @@ def render_all
           #if it's not visible right now, the $player can only see it if it's explored
           if $map[x][y].explored
             if wall
-              TCOD.console_put_char_ex($con, x, y, WALL_TILE.ord, TCOD::Color::WHITE * 0.5, TCOD::Color::BLACK)
+              TCOD.console_put_char_ex($con, x, y, WALL_TILE.ord,
+                                       TCOD::Color::WHITE * 0.5,
+                                       TCOD::Color::BLACK)
             else
-              TCOD.console_put_char_ex($con, x, y, ' '.ord, TCOD::Color::BLACK, GROUND_COLOR * 0.5)
+              TCOD.console_put_char_ex($con, x, y, ' '.ord, TCOD::Color::BLACK,
+                                       GROUND_COLOR * 0.5)
             end
           end
         else
           #it's visible
           if wall
-            TCOD.console_put_char_ex($con, x, y, WALL_TILE.ord, TCOD::Color::WHITE, TCOD::Color::BLACK)
+            TCOD.console_put_char_ex($con, x, y, WALL_TILE.ord,
+                                     TCOD::Color::WHITE, TCOD::Color::BLACK)
           else
-            TCOD.console_put_char_ex($con, x, y, ' '.ord, TCOD::Color::BLACK, GROUND_COLOR)
+            TCOD.console_put_char_ex($con, x, y, ' '.ord, TCOD::Color::BLACK,
+                                     GROUND_COLOR)
           end
           #since it's visible, explore it
           $map[x][y].explored = true
