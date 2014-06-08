@@ -24,7 +24,7 @@ module TCOD
     # If clib/local exists, use it instead.
     local = File.join(APP_ROOT, 'clib', 'local')
     if File.directory?(local)
-      libpath = local
+      libpath = File.join(local, "libtcod#{ext}")
     else
       libpath = File.join(APP_ROOT, 'clib', platform, "libtcod#{ext}")
     end
