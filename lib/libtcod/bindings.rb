@@ -3,24 +3,35 @@ APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
 module TCOD
   extend FFI::Library
 
-  libname = 'libtcod'
-  ext = RUBY_PLATFORM.include?('darwin') ? '.dylib' : '.so'
+  # Bind to SO
+  proc {
+    libname = 'libtcod'
+    ext = RUBY_PLATFORM.include?('darwin') ? '.dylib' : '.so'
 
-  case RUBY_PLATFORM
-  when /mingw32/
-    libname = 'libtcod-mingw'
-    ext = '-mingw.dll'
-    platform = 'i686'
-  when /powerpc/
-    platform = 'powerpc'
-  when /x86_64/
-    platform = 'amd64'
-  when /i.86/
-    platform = 'i686'
-  end
+    case RUBY_PLATFORM
+    when /mingw32/
+      libname = 'libtcod-mingw'
+      ext = '-mingw.dll'
+      platform = 'i686'
+    when /powerpc/
+      platform = 'powerpc'
+    when /x86_64/
+      platform = 'amd64'
+    when /i.86/
+      platform = 'i686'
+    end
 
-  libpath = File.join(APP_ROOT, 'clib', platform, "libtcod#{ext}")
-  ffi_lib [libname, libpath]
+    # If clib/local exists, use it instead.
+    local = File.join(APP_ROOT, 'clib', 'local')
+    if File.directory?(local)
+      libpath = local
+    else
+      libpath = File.join(APP_ROOT, 'clib', platform, "libtcod#{ext}")
+    end
+
+    ffi_lib [libname, libpath]
+  } . call()
+
 
   # Remove redundant namespacing
   def self.tcod_function(sym, *args)

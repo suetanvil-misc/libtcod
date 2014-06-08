@@ -347,3 +347,5 @@ until TCOD.console_is_window_closed()
  will_exit = handle_keys()
  break if will_exit
 end
+
+puts "Fall-through to end."
