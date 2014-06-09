@@ -266,7 +266,7 @@ def render_all
 end
 
 def handle_keys
-  #key = TCOD.console_check_for_keypress()  #real-time
+  #key = TCOD.console_check_for_keypress(0)  #real-time
   key = TCOD.console_wait_for_keypress(true)  #turn-based
 
   if key.vk == TCOD::KEY_ENTER and key.lalt
